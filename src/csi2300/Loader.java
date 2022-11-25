@@ -1,3 +1,5 @@
+package csi2300;
+
 import java.util.Random;
 
 import javafx.animation.TranslateTransition;
@@ -20,39 +22,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
-
-
-public class App extends Application {
-
-    @Override 
-
-    public void start(Stage primaryStage) {
-
-        Pane Pane = new Pane();
-        Label question = new Label("");
-        Label answer = new Label();
-        TextField result = new TextField();
-        Loader loader = new Loader(result, answer, question);
-   
-        Scene scene = new Scene(Pane, 600, 600);
-
-        primaryStage.setTitle("Space game!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        
-        loader.loadText(Pane);
-        loader.submitBtn(Pane);
-        loader.renewBtn(Pane);
-        loader.exitBtn(Pane, primaryStage);
-  
-    }
-
-    public static void main(String[] args){
-        launch(args);
-    }
-
-}
-
 
 
 class Loader {
@@ -120,7 +89,7 @@ class Loader {
 
         question.setText(number1 + " x " + number2);
 
-        AnswerTextPrompt prompt = new AnswerTextPrompt(
+        AnswerPrompt prompt = new AnswerPrompt(
             gp.getScene().getWindow()
         );
 
@@ -224,51 +193,5 @@ class Loader {
         btnExit.setLayoutX(260);
         btnExit.setLayoutY(330);
     }
-
-    
-
-    class AnswerTextPrompt {
-        private final String result;
-
-        AnswerTextPrompt(Window owner) {
-            final Stage dialog = new Stage();
-
-            dialog.setTitle("Enter your answer");
-            dialog.initOwner(owner);
-            dialog.initStyle(StageStyle.UTILITY);
-            dialog.initModality(Modality.WINDOW_MODAL);
-            dialog.setX(owner.getX() + owner.getWidth());
-            dialog.setY(owner.getY());
-
-            final TextField textField = new TextField();
-            final Button submitButton = new Button("Submit");
-            submitButton.setDefaultButton(true);
-            submitButton.setOnAction(new EventHandler<ActionEvent>() {
-                public void handle(ActionEvent t) {
-                    dialog.close();
-                }
-            });
-
-            textField.setMinHeight(TextField.USE_PREF_SIZE);
-
-            final VBox layout = new VBox(10);
-            layout.setAlignment(Pos.CENTER_RIGHT);
-            layout.setStyle("-fx-background-color: azure; -fx-padding: 10;");
-            layout.getChildren().setAll(
-                textField, 
-                submitButton
-            );
-
-            dialog.setScene(new Scene(layout));
-            dialog.showAndWait();
-
-            result = textField.getText();
-        }
-
-        private String getResult() {
-            return result;
-        }
-    }
-	
     
 }
